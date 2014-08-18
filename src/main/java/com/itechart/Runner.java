@@ -9,24 +9,24 @@ import java.io.*;
 public class Runner {
     private class Task implements Runnable {
         private final Logger LOGGER = LoggerFactory.getLogger(Task.class);
-        private final InputStreamWrapper inputStream;
+        private final InputStreamWrapper inputStreamWrapper;
 
-        public Task(final InputStreamWrapper inputStream) {
-            this.inputStream = inputStream;
+        public Task(final InputStreamWrapper inputStreamWrapper) {
+            this.inputStreamWrapper = inputStreamWrapper;
         }
 
         @Override
         public void run() {
             try {
-                while ((inputStream.read()) != -1) {
-                    LOGGER.info(inputStream.toString());
+                while ((inputStreamWrapper.read()) != -1) {
+                    LOGGER.info(inputStreamWrapper.toString());
                 }
             } catch (IOException e) {
                 LOGGER.error(e.getMessage(), e);
             } finally {
-                if (inputStream != null) {
+                if (inputStreamWrapper != null) {
                     try {
-                        inputStream.close();
+                        inputStreamWrapper.close();
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage(), e);
                     }
@@ -36,10 +36,20 @@ public class Runner {
     }
 
     private void go() {
-        InputStreamWrapper wrapper1 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
-        InputStreamWrapper wrapper2 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
-        InputStreamWrapper wrapper3 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
-        InputStreamWrapper wrapper4 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
+        InputStream inputStream = this.getClass().getResourceAsStream("/test.txt");
+        String bandwidthPeriods = "12:00am-02:23pm=100|02:23pm-11:00pm=200|11:00pm-12:00am=";
+
+        InputStreamWrapper wrapper1 = new InputStreamWrapper(inputStream);
+        wrapper1.initBandwidthPeriods(bandwidthPeriods);
+
+        InputStreamWrapper wrapper2 = new InputStreamWrapper(inputStream);
+        wrapper2.initBandwidthPeriods(bandwidthPeriods);
+
+        InputStreamWrapper wrapper3 = new InputStreamWrapper(inputStream);
+        wrapper3.initBandwidthPeriods(bandwidthPeriods);
+
+        InputStreamWrapper wrapper4 = new InputStreamWrapper(inputStream);
+        wrapper4.initBandwidthPeriods(bandwidthPeriods);
 
         new Thread(new Task(wrapper1)).start();
         new Thread(new Task(wrapper2)).start();

@@ -4,7 +4,7 @@ This example will run the demonstration of how 4 different input streams share t
 limited channel. To launch example run:
 mvn clean compile exec:java -Dexec.mainClass="com.itechart.Runner"
 
-Note, logging operations will executes too fast so just stop the threads from console
+Note, logging operations will execute too fast so just stop the threads from console
 (using Ctrl + C) to read logs.
 
 
