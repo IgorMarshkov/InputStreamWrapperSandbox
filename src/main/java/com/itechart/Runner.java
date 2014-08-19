@@ -38,7 +38,7 @@ public class Runner {
 
     private void go() {
         BandwidthManager bandwidthManager = BandwidthManager.getInstance();
-        bandwidthManager.init("12:00am-02:23pm=100|02:23pm-11:00pm=200|11:00pm-12:00am=");
+        bandwidthManager.init("12:00am-02:23pm=80|02:23pm-11:00pm=100|11:00pm-12:00am=40");
 
         InputStreamWrapper wrapper1 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
         InputStreamWrapper wrapper2 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
