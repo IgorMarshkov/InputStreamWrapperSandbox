@@ -1,5 +1,6 @@
 package com.itechart;
 
+import com.itechart.core.BandwidthManager;
 import com.itechart.core.stream.InputStreamWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,20 +37,13 @@ public class Runner {
     }
 
     private void go() {
-        InputStream inputStream = this.getClass().getResourceAsStream("/test.txt");
-        String bandwidthPeriods = "12:00am-02:23pm=100|02:23pm-11:00pm=200|11:00pm-12:00am=";
+        BandwidthManager bandwidthManager = BandwidthManager.getInstance();
+        bandwidthManager.init("12:00am-02:23pm=100|02:23pm-11:00pm=200|11:00pm-12:00am=");
 
-        InputStreamWrapper wrapper1 = new InputStreamWrapper(inputStream);
-        wrapper1.initBandwidthPeriods(bandwidthPeriods);
-
-        InputStreamWrapper wrapper2 = new InputStreamWrapper(inputStream);
-        wrapper2.initBandwidthPeriods(bandwidthPeriods);
-
-        InputStreamWrapper wrapper3 = new InputStreamWrapper(inputStream);
-        wrapper3.initBandwidthPeriods(bandwidthPeriods);
-
-        InputStreamWrapper wrapper4 = new InputStreamWrapper(inputStream);
-        wrapper4.initBandwidthPeriods(bandwidthPeriods);
+        InputStreamWrapper wrapper1 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
+        InputStreamWrapper wrapper2 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
+        InputStreamWrapper wrapper3 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
+        InputStreamWrapper wrapper4 = new InputStreamWrapper(this.getClass().getResourceAsStream("/test.txt"));
 
         new Thread(new Task(wrapper1)).start();
         new Thread(new Task(wrapper2)).start();
